@@ -7,8 +7,13 @@ const PORT = process.env.PORT || 3010;
 app.get('/', async (req, res) => {
     try {
         await db.sequelize.authenticate();
-        const spells = await db.MobSpellList.findAll({ limit: 10 });
-        res.send({ spells });
+        const mobs = await db.MobSpawnPoint.findAll({ limit: 1, include: [
+            {
+                model: db.MobGroup,
+                include: [db.ZoneSetting, { model: db.MobPool, include: [db.MobFamily]}]
+            }
+        ] });
+        res.send({ mobs });
     }
     catch(err) {
         res.send({ "error": err });
