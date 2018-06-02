@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3010;
 app.get('/', async (req, res) => {
     try {
         await db.sequelize.authenticate();
-        const mobs = await db.MobSpawnPoint.findAll({ where: {mobname: "Aspidochelone"}, limit: 20, include: [
+        const mobs = await db.MobSpawnPoint.findAll({ where: {mobname: "air_elemental"}, limit: 20, include: [
             {
                 model: db.MobGroup,
                 include: [db.ZoneSetting, { model: db.MobPool, include: [db.MobFamily]}]

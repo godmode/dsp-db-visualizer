@@ -1,24 +1,66 @@
 import React from 'react';
-import { Form, Message, Icon, Popup } from 'semantic-ui-react';
+import { Form, Message, Icon, Popup, Accordion, Label, Container, List, Segment, Card, Image, Button } from 'semantic-ui-react';
 import * as StatusIcons from './icons';
 
 export default ({ mob }) => {
+
+    const gmCommands = (
+        <List>
+            <List.Item icon='terminal' content={`!spawnmob ${mob.mobid}`} />
+            <List.Item icon='terminal' content={`!pos ${parseInt(mob.pos_x)} ${parseInt(mob.pos_y)} ${parseInt(mob.pos_z)} ${mob.mob_group.zoneid}`} />
+        </List>
+    );
+
+    const damageModifiers = (
+        <Segment.Group>
+            <Segment size='huge' color='green' content={decodeWeakness(mob.mob_group.mob_pool.mob_family_system)} />
+            <Segment size='huge' color='yellow' content={decodeResistance(mob.mob_group.mob_pool.mob_family_system)} />
+            <Segment size='huge' color='red' content={decodeImmunity(mob.mob_group.mob_pool.immunity, mob.mob_group.mob_pool.mob_family_system)} />
+        </Segment.Group>
+    );
+
+    const elementalResists = (
+        <Message>In Development</Message>
+    );
+
+    return (
+        <Card style={{margin: "40px"}}>
+            <Card.Content>
+                <Image floated='right' size='mini' src='./mob.jpg' />
+                <Card.Header>{mob.polutils_name}</Card.Header>
+                <Card.Meta>{mob.mob_group.zone_setting.name.split('_').join(' ')}</Card.Meta>
+                <Card.Description>
+                    <Accordion
+                        panels={[
+                            {title: "GM Commands", content: {content: gmCommands, key: 'gm-cmds'} },
+                            {title: "Elemental Resistance", content: {content: elementalResists, key: 'ele-resist'} },                            
+                            {title: "Damage Resistance", content: {content: damageModifiers, key: 'damage-mods'} }
+                        ]}
+                        styled
+                    />
+                </Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+                <div className='ui two buttons'>
+                    <Button basic color='green' onClick={() => window.location.href = 'http://www.google.com' }>DB Source</Button>
+                    <Button basic color='red'>Edit</Button>
+                </div>
+            </Card.Content>
+        </Card>
+    );
+
     return (
         <Form style={{margin: "40px", width: "500px"}}>
             <Message size='massive'>
                 <Message.Header>{mob.polutils_name}</Message.Header>
                 <Message.List>
-                    <Message.Item>{`!spawnmob ${mob.mobid}`}</Message.Item>
-                    <Message.Item>{`!pos ${parseInt(mob.pos_x)} ${parseInt(mob.pos_y)} ${parseInt(mob.pos_z)} ${mob.mob_group.zoneid}`}</Message.Item>
-                    <Message.Item>Weak:
-                        {decodeWeakness(mob.mob_group.mob_pool.mob_family_system)}                                 
-                    </Message.Item>
-                    <Message.Item>Resistant:
-                        {decodeResistance(mob.mob_group.mob_pool.mob_family_system)}         
-                    </Message.Item>
-                    <Message.Item>Immune:
-                        {decodeImmunity(mob.mob_group.mob_pool.immunity, mob.mob_group.mob_pool.mob_family_system)}
-                    </Message.Item>
+                     <Accordion
+                        panels={[
+                            {title: "GM Commands", content: {content: gmCommands, key: 'gm-commands'} },
+                            {title: "Damage Modifiers", content: {content: damageModifiers, key: 'damage-mods'} }
+                        ]}
+                        styled
+                    />
                 </Message.List>
             </Message>
         </Form>
@@ -40,7 +82,7 @@ const IMMUNITY = {
     REQUIEM: 0x400, // 1024
 }
 const decodeImmunity = (statusBitmask, familySystem) => {
-    const immune = [];
+    const immune = ['Immune:    '];
     Object.keys(IMMUNITY).forEach( status => {
         if (IMMUNITY[status] & statusBitmask) {
             switch (status) {
@@ -93,7 +135,7 @@ const decodeImmunity = (statusBitmask, familySystem) => {
 }
 
 const decodeResistance = (familySystem) => {
-    const resist = [];
+    const resist = ['Resistant: '];
     if (familySystem.Fire > 0 && familySystem.Fire < 1) resist.push(<StatusIcons.Fire />);
     if (familySystem.Ice > 0 && familySystem.Ice < 1) resist.push(<StatusIcons.Ice />);
     if (familySystem.Wind > 0 && familySystem.Wind < 1) resist.push(<StatusIcons.Wind />);
@@ -106,7 +148,7 @@ const decodeResistance = (familySystem) => {
 }
 
 const decodeWeakness = (familySystem) => {
-    const weakness = [];
+    const weakness = ['Weak: '];
     if (familySystem.Fire > 1) weakness.push(<StatusIcons.Fire />);
     if (familySystem.Ice > 1) weakness.push(<StatusIcons.Ice />);
     if (familySystem.Wind > 1) weakness.push(<StatusIcons.Wind />);

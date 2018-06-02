@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { Card } from 'semantic-ui-react';
 import Mob from './components/Mob';
 import Key from './components/Key';
 
@@ -27,7 +28,9 @@ class App extends Component {
 
     return (
       <div className="App">
-        {this.state.mobs.map( mob => <Mob mob={mob} />)}
+        <Card.Group>
+          {this.state.mobs.map( mob => <Mob mob={mob} />)}
+        </Card.Group>
       </div>
     );
   }
