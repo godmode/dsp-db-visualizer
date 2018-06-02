@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Mob from './components/Mob';
+import Key from './components/Key';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { mob: null };
+    this.state = { mobs: [] };
     this.calling = this.calling.bind(this);
   }
 
@@ -17,7 +18,7 @@ class App extends Component {
   async calling() {
     const response = await fetch('http://localhost:3010');
     const result = await response.json();
-    this.setState({ mob: result.mobs[0] });
+    this.setState({ mobs: result.mobs });
   }
 
   render() {
@@ -26,11 +27,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        {mob ? <Mob mob={mob} /> : <div>No Mob</div>}
+        {this.state.mobs.map( mob => <Mob mob={mob} />)}
       </div>
     );
   }
