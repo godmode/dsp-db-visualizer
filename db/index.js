@@ -25,4 +25,4 @@ MobGroup.belongsTo(ZoneSetting, { foreignKey: 'zoneid' });
 ZoneSetting.hasOne(MobGroup, { foreignKey: 'zoneid' });
 
 
-module.exports = { sequelize, MobSpellList, MobSpawnPoint, MobGroup, MobPool, MobFamily, ZoneSetting };
+module.exports = { sequelize, MobSpellList, MobSpawnPoint, MobGroup, MobPool, MobFamily, ZoneSetting, Sequelize };

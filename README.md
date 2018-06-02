@@ -1,3 +1,6 @@
+## Requirements
+* [Node Package Manager](https://www.npmjs.com/get-npm)
+
 ## Setup 
 
 1. `npm install`
