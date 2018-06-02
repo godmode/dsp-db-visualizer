@@ -17,4 +17,8 @@
 
 ## Running
 1. `npm start`
-2. Visit localhost:3010 in your browswer
+2. Visit localhost:3000 in your browser
+
+## Screenshots
+
+![screenshot](./client/public/screenshot1.png)
