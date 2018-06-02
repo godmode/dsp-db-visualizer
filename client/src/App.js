@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Mob from './components/Mob';
 
 class App extends Component {
   constructor(props) {
@@ -29,12 +30,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
-        {mob ? 
-        <div>
-          <div>{mob.mobname}</div>
-          <div>{`!pos ${mob.pos_x} ${mob.pos_y} ${mob.pos_z} ${mob.mob_group.zoneid}`}</div>
-        </div> : 
-        <div>No Mob</div>}
+        {mob ? <Mob mob={mob} /> : <div>No Mob</div>}
       </div>
     );
   }

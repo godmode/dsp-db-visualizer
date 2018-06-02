@@ -19,6 +19,8 @@
     "express": "^4.16.3",
     "mysql2": "^1.5.3",
     "nodemon": "^1.17.4",
+    "semantic-ui-css": "^2.3.1",
+    "semantic-ui-react": "^0.80.2",
     "sequelize": "^4.37.8"
   }
 }
