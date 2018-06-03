@@ -35,28 +35,6 @@ app.get('/', async (req, res) => {
     }
 });
 
-app.get('/monsters', async (req, res) => {
-    try {
-        await db.sequelize.authenticate();
-        const mobs = await db.MobSpawnPoint.find({ attributes: ['mobname', 'groupid'], where: { mobid: 17297441}, include: [
-            {
-                model: db.MobGroup,
-                include: [
-                    {model: db.ZoneSetting, attributes: ['name']},
-                    { model: db.MobPool, include: [{model: db.MobFamily, attributes: ['family']}], attributes: ['poolid', 'familyid']},
-                    { model: db.MobDroplist, include: [db.ItemBasic]}
-                ],
-                attributes: ['poolid', 'dropid', 'groupid'],
-            }
-        ] });
-        // const mobs = await db.MobDroplist.findAll({ where: {groupId: 6848}});
-        res.send({ mobs });
-    }
-    catch(err) {
-        res.send({ "error": err });
-    }
-});
-
 app.get('/zones', async (req, res) => {
     try {
         let limit = req.query.limit || 10;

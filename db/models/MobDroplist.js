@@ -16,10 +16,10 @@ const Sequelize = require('sequelize');
 module.exports = (sequelize) => {
     return sequelize.define('mob_droplist', {
         dropId: { type: Sequelize.INTEGER, allowNull: false, primaryKey: true, defaultValue: null },
-        dropType: { type: Sequelize.INTEGER, allowNull: false, defaultValue: 0 },
-        groupId: { type: Sequelize.INTEGER, allowNull: false, defaultValue: 0 },
-        groupRate: { type: Sequelize.INTEGER, allowNull: false, defaultValue: 1000 },
-        itemId: { type: Sequelize.INTEGER, allowNull: false, defaultValue: 0 },
-        itemRate: { type: Sequelize.INTEGER, allowNull: false, defaultValue: 0 },
+        dropType: { type: Sequelize.INTEGER, allowNull: false, primaryKey: true, defaultValue: 0 },
+        groupId: { type: Sequelize.INTEGER, allowNull: false, primaryKey: true, defaultValue: 0 },
+        groupRate: { type: Sequelize.INTEGER, allowNull: false, primaryKey: true, defaultValue: 1000 },
+        itemId: { type: Sequelize.INTEGER, allowNull: false, primaryKey: true, defaultValue: 0 },
+        itemRate: { type: Sequelize.INTEGER, allowNull: false, primaryKey: true, defaultValue: 0 },
     }, { timestamps: false, freezeTableName: true });
 }

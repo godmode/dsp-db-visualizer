@@ -30,7 +30,8 @@ export default ({ mob }) => {
                     const name = drop.item_basic.name.split('_').map( word => {
                         return word.replace(word[0], word[0].toUpperCase());
                     }).join(' ');
-                    const rate = (drop.itemRate / 1000) * 100;
+                    let rate = (drop.itemRate / 1000) * 100;
+                    rate = parseFloat(parseFloat(rate).toFixed(2)); 
                     return <Message.Item>{`${name}: ${rate}%`}</Message.Item>
                 })}
             </Message.List>
