@@ -23,6 +23,20 @@ export default ({ mob }) => {
         <Message>In Development</Message>
     );
 
+    const drops = (
+        <Message>
+            <Message.List>
+                {mob.mob_group.mob_droplists.map( drop => {
+                    const name = drop.item_basic.name.split('_').map( word => {
+                        return word.replace(word[0], word[0].toUpperCase());
+                    }).join(' ');
+                    const rate = (drop.itemRate / 1000) * 100;
+                    return <Message.Item>{`${name}: ${rate}%`}</Message.Item>
+                })}
+            </Message.List>
+        </Message>
+    );
+
     return (
         <Card style={{margin: "40px"}}>
             <Card.Content>
@@ -34,7 +48,8 @@ export default ({ mob }) => {
                         panels={[
                             {title: "GM Commands", content: {content: gmCommands, key: 'gm-cmds'} },
                             {title: "Elemental Resistance", content: {content: elementalResists, key: 'ele-resist'} },                            
-                            {title: "Damage Resistance", content: {content: damageModifiers, key: 'damage-mods'} }
+                            {title: "Damage Resistance", content: {content: damageModifiers, key: 'damage-mods'} },
+                            {title: "Drops", content: {content: drops, key: 'drops'} }
                         ]}
                         styled
                     />
@@ -42,7 +57,7 @@ export default ({ mob }) => {
             </Card.Content>
             <Card.Content extra>
                 <div className='ui two buttons'>
-                    <Button basic color='green' onClick={() => window.location.href = 'http://www.google.com' }>DB Source</Button>
+                    <Button basic color='green' onClick={() => window.location.href = `http://localhost:3010?id=${mob.mobid}` }>DB Source</Button>
                     <Button basic color='red'>Edit</Button>
                 </div>
             </Card.Content>
