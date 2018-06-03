@@ -38,6 +38,12 @@ export default ({ mob }) => {
         </Message>
     );
 
+    const mobTypes = (
+        <Segment size='huge'>
+            {decodeMobtypes(mob.mob_group.mob_pool.mobType)}
+        </Segment>
+    );
+
     return (
         <Card style={{margin: "40px"}}>
             <Card.Content>
@@ -47,6 +53,7 @@ export default ({ mob }) => {
                 <Card.Description>
                     <Accordion
                         panels={[
+                            {title: "Stats", content: {content: mobTypes, key: 'mob-types'} },
                             {title: "GM Commands", content: {content: gmCommands, key: 'gm-cmds'} },
                             {title: "Elemental Resistance", content: {content: elementalResists, key: 'ele-resist'} },                            
                             {title: "Damage Resistance", content: {content: damageModifiers, key: 'damage-mods'} },
@@ -97,8 +104,9 @@ const IMMUNITY = {
     ELEGY: 0x200, // 512
     REQUIEM: 0x400, // 1024
 }
+
 const decodeImmunity = (statusBitmask, familySystem) => {
-    const immune = ['Immune:    '];
+    const immune = ['Immune: '];
     Object.keys(IMMUNITY).forEach( status => {
         if (IMMUNITY[status] & statusBitmask) {
             switch (status) {
@@ -147,6 +155,10 @@ const decodeImmunity = (statusBitmask, familySystem) => {
     if (familySystem.Water === 0) immune.push(<StatusIcons.Water />);
     if (familySystem.Dark === 0) immune.push(<StatusIcons.Darkness />);
     if (familySystem.Light === 0) immune.push(<StatusIcons.Light />);
+    if (familySystem.Slash === 0) immune.push(<StatusIcons.Slashing />);
+    if (familySystem.Pierce === 0) immune.push(<StatusIcons.Piercing />);
+    if (familySystem.H2H === 0) immune.push(<StatusIcons.H2H />);
+    if (familySystem.Impact === 0) immune.push(<StatusIcons.Impact />);
     return immune;
 }
 
@@ -160,6 +172,10 @@ const decodeResistance = (familySystem) => {
     if (familySystem.Water > 0 && familySystem.Water < 1) resist.push(<StatusIcons.Water />);
     if (familySystem.Dark > 0 && familySystem.Dark < 1) resist.push(<StatusIcons.Darkness />);
     if (familySystem.Light > 0 && familySystem.Light < 1) resist.push(<StatusIcons.Light />);
+    if (familySystem.Slash > 0 && familySystem.Slash < 1) resist.push(<StatusIcons.Slashing />);
+    if (familySystem.Pierce > 0 && familySystem.Pierce < 1) resist.push(<StatusIcons.Piercing />);
+    if (familySystem.H2H > 0 && familySystem.H2H < 1) resist.push(<StatusIcons.H2H />);
+    if (familySystem.Impact > 0 && familySystem.Impact < 1) resist.push(<StatusIcons.Impact />);
     return resist;
 }
 
@@ -173,5 +189,51 @@ const decodeWeakness = (familySystem) => {
     if (familySystem.Water > 1) weakness.push(<StatusIcons.Water />);
     if (familySystem.Dark > 1) weakness.push(<StatusIcons.Darkness />);
     if (familySystem.Light > 1) weakness.push(<StatusIcons.Light />);
+    if (familySystem.Slash > 1) weakness.push(<StatusIcons.Slashing />);
+    if (familySystem.Pierce > 1) weakness.push(<StatusIcons.Piercing />);
+    if (familySystem.H2H > 1) weakness.push(<StatusIcons.H2H />);
+    if (familySystem.Impact > 1) weakness.push(<StatusIcons.Impact />);
     return weakness;
+}
+
+const MOBTYPE = {
+    NORMAL: 0x00,
+    PCSPAWNED: 0x01,
+    NOTORIOUS: 0x02,
+    FISHED: 0x04,
+    CALLED: 0x08,
+    BATTLEFIELD: 0x10,  // 16
+    EVENT: 0x20  // 32
+};
+
+const decodeMobtypes = (typeBitmask) => {
+    const types = ['Mob Type: '];
+    Object.keys(MOBTYPE).forEach( type => {
+        if (MOBTYPE[type] & typeBitmask) {
+            switch (type) {
+                case "NORMAL":
+                    types.push(<StatusIcons.Sleep />);
+                    break;
+                case "PCSPAWNED":
+                    types.push(<StatusIcons.Gravity />);
+                    break;
+                case "NOTORIOUS":
+                    types.push(<StatusIcons.NM />);
+                    break;
+                case "FISHED":
+                    types.push(<StatusIcons.Stun />);
+                    break;
+                case "CALLED":
+                    types.push(<StatusIcons.Silence />);
+                    break;
+                case "BATTLEFIELD":
+                    types.push(<StatusIcons.Paralyze />);
+                    break;
+                case "EVENT":
+                    types.push(<StatusIcons.Blind />);
+                    break;
+            }
+        }
+    });
+    return types;
 }

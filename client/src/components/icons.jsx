@@ -194,3 +194,55 @@ export const Light = () => {
         />  
     );
 }
+
+export const Piercing = () => {
+    return (
+        <Popup
+            trigger={<Icon color='yellow' name='bullseye' />}
+            content='Piercing'
+            basic
+        />  
+    );
+}
+
+export const H2H = () => {
+    return (
+        <Popup
+            trigger={<Icon color='yellow' name='hand rock' />}
+            content='Hand to Hand'
+            basic
+        />  
+    );
+}
+
+export const Slashing = () => {
+    return (
+        <Popup
+            trigger={<Icon color='yellow' name='cut' />}
+            content='Slashing'
+            basic
+        />  
+    );
+}
+
+export const Impact = () => {
+    return (
+        <Popup
+            trigger={<Icon color='yellow' name='gavel' />}
+            content='Impact'
+            basic
+        />  
+    );
+}
+
+// Mob Types
+
+export const NM = () => {
+    return (
+        <Popup
+            trigger={<Icon color='blue' name='universal access' />}
+            content='Notorious Monster'
+            basic
+        />  
+    );
+}
