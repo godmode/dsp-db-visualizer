@@ -19,8 +19,14 @@ export default ({ mob }) => {
         </Segment.Group>
     );
 
-    const elementalResists = (
-        <Message>In Development</Message>
+    const mods = modParser(mob);
+    // {`mods: ${JSON.stringify(mods.mods)} :: mobMods: ${JSON.stringify(mods.mobMods)}`}
+
+    const modifiers = (
+        <Segment>
+            {Object.keys(mods.mods).map( mod => <Label style={{display: "block", marginBottom: "3px"}}>{`${window.mods[mod]}: ${mods.mods[mod]}`}</Label>)}
+            {Object.keys(mods.mobMods).map( mod => <Label style={{display: "block", marginBottom: "3px"}}>{`${window.mobMods[mod]}: ${mods.mobMods[mod]}`}</Label>)}
+        </Segment>
     );
 
     const drops = (
@@ -52,11 +58,12 @@ export default ({ mob }) => {
                 <Card.Meta>{mob.mob_group.zone_setting.name.split('_').join(' ')}</Card.Meta>
                 <Card.Description>
                     <Accordion
+                        defaultActiveIndex={0}
                         panels={[
                             {title: "Stats", content: {content: mobTypes, key: 'mob-types'} },
                             {title: "GM Commands", content: {content: gmCommands, key: 'gm-cmds'} },
-                            {title: "Elemental Resistance", content: {content: elementalResists, key: 'ele-resist'} },                            
                             {title: "Damage Resistance", content: {content: damageModifiers, key: 'damage-mods'} },
+                            {title: "Modifiers", content: {content: modifiers, key: 'mods'} },                            
                             {title: "Drops", content: {content: drops, key: 'drops'} }
                         ]}
                         styled
@@ -236,4 +243,41 @@ const decodeMobtypes = (typeBitmask) => {
         }
     });
     return types;
+}
+
+const modParser = (mob) => {
+    // console.log("MODS", mob.mob_spawn_mods, mob.mob_group.mob_pool.mob_pool_mods, mob.mob_group.mob_pool.mob_family_system.mob_family_mods);
+    const mods = {};
+    const mobMods = {};
+    for (const mod of mob.mob_spawn_mods) {
+        if (mod.is_mob_mod) {
+            if (mobMods[mod.modid]) mobMods[mod.modid] = mobMods[mod.modid] + mod.value;
+            else mobMods[mod.modid] = mod.value;
+        }
+        else {
+            if (mods[mod.modid]) mods[mod.modid] = mods[mod.modid] + mod.value;
+            else mods[mod.modid] = mod.value;
+        }
+    }
+    for (const mod of mob.mob_group.mob_pool.mob_pool_mods) {
+        if (mod.is_mob_mod) {
+            if (mobMods[mod.modid]) mobMods[mod.modid] = mobMods[mod.modid] + mod.value;
+            else mobMods[mod.modid] = mod.value;
+        }
+        else {
+            if (mods[mod.modid]) mods[mod.modid] = mods[mod.modid] + mod.value;
+            else mods[mod.modid] = mod.value;
+        }
+    }
+    for (const mod of mob.mob_group.mob_pool.mob_family_system.mob_family_mods) {
+        if (mod.is_mob_mod) {
+            if (mobMods[mod.modid]) mobMods[mod.modid] = mobMods[mod.modid] + mod.value;
+            else mobMods[mod.modid] = mod.value;
+        }
+        else {
+            if (mods[mod.modid]) mods[mod.modid] = mods[mod.modid] + mod.value;
+            else mods[mod.modid] = mod.value;
+        }
+    }
+    return { mods, mobMods };
 }

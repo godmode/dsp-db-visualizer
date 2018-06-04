@@ -22,10 +22,17 @@ app.get('/', async (req, res) => {
                 model: db.MobGroup,
                 include: [
                     db.ZoneSetting,
-                    { model: db.MobPool, include: [db.MobFamily]},
-                    { model: db.MobDroplist, include: [db.ItemBasic]}
+                    { model: db.MobDroplist, include: [db.ItemBasic]},
+                    { 
+                        model: db.MobPool,
+                        include: [
+                            db.MobPoolMod,
+                            { model: db.MobFamily, include: [db.MobFamilyMod]}
+                        ]
+                    }
                 ]
-            }
+            },
+            db.MobSpawnMod
         ] });
         // const mobs = await db.MobDroplist.findAll({ where: {groupId: 6848}});
         res.send({ mobs });

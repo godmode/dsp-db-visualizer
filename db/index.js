@@ -14,6 +14,10 @@ const MobDroplist = require('./models/MobDroplist')(sequelize);
 const ZoneSetting = require('./models/ZoneSetting')(sequelize);
 const ItemBasic = require('./models/ItemBasic')(sequelize);
 
+const MobSpawnMod = require('./models/MobSpawnMod')(sequelize);
+const MobPoolMod = require('./models/MobPoolMod')(sequelize);
+const MobFamilyMod = require('./models/MobFamilyMod')(sequelize);
+
 MobSpawnPoint.belongsTo(MobGroup, { foreignKey: 'groupid' });
 MobGroup.hasOne(MobSpawnPoint, { foreignKey: 'groupid' });
 
@@ -32,7 +36,17 @@ MobGroup.hasMany(MobDroplist, { foreignKey: 'dropId', sourceKey: 'dropid', targe
 MobDroplist.belongsTo(ItemBasic, { foreignKey: 'itemid' });
 ItemBasic.hasOne(MobDroplist, { foreignKey: 'itemid' });
 
+MobSpawnMod.belongsTo(MobSpawnPoint, { foreignKey: 'mobid' });
+MobSpawnPoint.hasMany(MobSpawnMod, { foreignKey: 'mobid' });
+
+MobPoolMod.belongsTo(MobPool, { foreignKey: 'poolid' });
+MobPool.hasMany(MobPoolMod, { foreignKey: 'poolid' });
+
+MobFamilyMod.belongsTo(MobFamily, { foreignKey: 'familyid' });
+MobFamily.hasMany(MobFamilyMod, { foreignKey: 'familyid' });
+
 module.exports = { 
     sequelize, MobSpellList, MobSpawnPoint, MobGroup, MobPool,
-    MobFamily, MobDroplist, ZoneSetting, Sequelize, ItemBasic
+    MobFamily, MobDroplist, ZoneSetting, Sequelize, ItemBasic,
+    MobSpawnMod, MobPoolMod, MobFamilyMod
 };
