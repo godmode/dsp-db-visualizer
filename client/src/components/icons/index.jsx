@@ -201,7 +201,7 @@ export const Piercing = () => {
             trigger={<Icon color='yellow' name='bullseye' />}
             content='Piercing'
             basic
-        />  
+        />
     );
 }
 

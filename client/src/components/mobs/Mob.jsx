@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Message, Icon, Popup, Accordion, Label, Container, List, Segment, Card, Image, Button } from 'semantic-ui-react';
-import * as StatusIcons from './icons';
+import * as StatusIcons from '../icons';
 
 export default ({ mob }) => {
 
