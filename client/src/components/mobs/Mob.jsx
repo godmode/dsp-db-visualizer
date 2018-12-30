@@ -50,6 +50,12 @@ export default ({ mob }) => {
         </Segment>
     );
 
+    const stats = (
+        <List>
+            <List.Item icon='info circle' content={`Level: ${mob.mob_group.minLevel}-${mob.mob_group.maxLevel}`} />
+        </List>
+    )
+
     return (
         <Card style={{margin: "40px"}}>
             <Card.Content>
@@ -60,7 +66,7 @@ export default ({ mob }) => {
                     <Accordion
                         defaultActiveIndex={0}
                         panels={[
-                            {title: "Stats", content: {content: mobTypes, key: 'mob-types'} },
+                            {title: "Stats", content: {content: stats, key: 'mob-types'} },
                             {title: "GM Commands", content: {content: gmCommands, key: 'gm-cmds'} },
                             {title: "Damage Resistance", content: {content: damageModifiers, key: 'damage-mods'} },
                             {title: "Modifiers", content: {content: modifiers, key: 'mods'} },                            

@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const db = require('./db');
+const cdb = require('./db/models');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
@@ -53,6 +54,23 @@ app.get('/zones', async (req, res) => {
         const zones = await db.ZoneSetting.findAll({ attributes: ['name'], include: [
             {model: db.MobGroup, attributes: ['groupid']}
         ]});
+        res.send({ zones });
+    }
+    catch(err) {
+        res.send({ "error": err });
+    }
+});
+
+app.get('/chars', async (req, res) => {
+    try {
+        let limit = req.query.limit || 10;
+        // let search = req.query.search || '';
+        // const where = {};
+        // if (req.query.id) where.mobid = req.query.id;
+        // else where["polutils_name"] = { [db.Sequelize.Op.like]: `%${search}%` };
+        await cdb.sequelize.authenticate();
+        const zones = await cdb.Char.findAll();
+        console.log("Z")
         res.send({ zones });
     }
     catch(err) {
