@@ -16,7 +16,7 @@ class Mobs extends React.Component {
   
     async search(e) {
       const search = e.target.value || '';
-      const response = await fetch(`http://localhost:3010?search=${search}`);
+      const response = await fetch(`http://localhost:3010?search=${search}&limit=50`);
       const result = await response.json();
       this.setState({ mobs: result.mobs });
     }
