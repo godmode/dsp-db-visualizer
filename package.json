@@ -21,6 +21,6 @@
     "nodemon": "^1.17.4",
     "semantic-ui-css": "^2.3.1",
     "semantic-ui-react": "^0.80.2",
-    "sequelize": "^4.37.8"
+    "sequelize": "^5.15.1"
   }
 }
